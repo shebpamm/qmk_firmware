@@ -116,40 +116,11 @@ bool suspended = false;
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
-#ifdef RGBLIGHT_ENABLE
-      case RGB_SLD:
-        if (record->event.pressed) {
-                rgblight_mode(1);
-              }
-        return false;
-      case HSV_172_255_255:
-        if (record->event.pressed) {
-                #ifdef RGBLIGHT_ENABLE
-                  rgblight_enable();
-                  rgblight_mode(1);
-                  rgblight_sethsv(172,255,255);
-                #endif
-              }
-        return false;
-      case HSV_86_255_128:
-        if (record->event.pressed) {
-                #ifdef RGBLIGHT_ENABLE
-                  rgblight_enable();
-                  rgblight_mode(1);
-                  rgblight_sethsv(86,255,128);
-                #endif
-              }
-        return false;
-      case HSV_27_255_255:
-        if (record->event.pressed) {
-                #ifdef RGBLIGHT_ENABLE
-                  rgblight_enable();
-                  rgblight_mode(1);
-                  rgblight_sethsv(27,255,255);
-                #endif
-              }
-        return false;
-#endif
+    case VRSN:
+      if (record->event.pressed) {
+        SEND_STRING(QMK_KEYBOARD "/" QMK_KEYMAP " @ " QMK_VERSION);
+      }
+      break;
     }
   return true;
 }
