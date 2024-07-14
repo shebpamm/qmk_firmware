@@ -18,6 +18,7 @@ jobs:
       matrix:
         keymap:
           - default
+          - oryx
 
     steps:
     - name: Checkout QMK Firmware
