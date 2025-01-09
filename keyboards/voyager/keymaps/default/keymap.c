@@ -11,6 +11,7 @@ enum custom_keycodes {
   ST_MACRO_0,
   NULL_A,
   NULL_D,
+  AUTO_CLICK,
 };
 
 const uint16_t null_to_standard[] = {
@@ -18,6 +19,8 @@ const uint16_t null_to_standard[] = {
   [NULL_D] = KC_D,
 };
 
+bool autoclicker_enabled = false;
+uint16_t autoclicker_timer;
 
 enum tap_dance_codes {
   DANCE_0,
@@ -26,7 +29,7 @@ enum tap_dance_codes {
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [0] = LAYOUT_voyager(
-    KC_F20,         KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,                                 KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,
+    KC_F20,         AUTO_CLICK, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,                                 KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,
     KC_TAB,         KC_Q,           KC_W,           KC_E,           KC_R,           KC_T,                                           KC_Y,           KC_U,           KC_I,           KC_O,           KC_P,           KC_TRANSPARENT,
     MO(5),          MT(MOD_LGUI, KC_A),MT(MOD_LALT, KC_S),MT(MOD_LCTL, KC_D),MT(MOD_LSFT, KC_F),KC_G,                                           KC_H,           MT(MOD_LSFT, KC_J),MT(MOD_LCTL, KC_K),MT(MOD_LALT, KC_L),MT(MOD_LGUI, KC_SCLN),KC_TRANSPARENT,
     KC_TRANSPARENT, KC_Z,           KC_X,           KC_C,           KC_V,           KC_B,                                           KC_N,           KC_M,           KC_COMMA,       KC_DOT,         KC_TRANSPARENT, KC_TRANSPARENT,
@@ -195,6 +198,14 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         rgblight_sethsv(215,108,223);
       }
       return false;
+    case AUTO_CLICK:
+        if (record->event.pressed) {
+            autoclicker_enabled = true;
+            autoclicker_timer = timer_read();
+        } else {
+            autoclicker_enabled = false;
+        }
+        return false;
     case NULL_A:
     case NULL_D:
       if (record->event.pressed) {
@@ -217,6 +228,14 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   return true;
 }
 
+void matrix_scan_user(void) {
+    if (autoclicker_enabled) {
+        if (timer_elapsed(autoclicker_timer) > 50) {
+            tap_code(KC_MS_BTN1);
+            autoclicker_timer = timer_read();
+        }
+    }
+}
 
 typedef struct {
     bool is_press_action;
