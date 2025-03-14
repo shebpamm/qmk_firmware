@@ -1,5 +1,6 @@
 #include QMK_KEYBOARD_H
 #include "version.h"
+#include "keymap_steno.h"
 #define MOON_LED_LEVEL LED_LEVEL
 #define ML_SAFE_RANGE SAFE_RANGE
 
@@ -31,7 +32,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [0] = LAYOUT_voyager(
     KC_F20,         AUTO_CLICK, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,                                 KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,
     KC_TAB,         KC_Q,           KC_W,           KC_E,           KC_R,           KC_T,                                           KC_Y,           KC_U,           KC_I,           KC_O,           KC_P,           KC_TRANSPARENT,
-    MO(5),          MT(MOD_LGUI, KC_A),MT(MOD_LALT, KC_S),MT(MOD_LCTL, KC_D),MT(MOD_LSFT, KC_F),KC_G,                                           KC_H,           MT(MOD_LSFT, KC_J),MT(MOD_LCTL, KC_K),MT(MOD_LALT, KC_L),MT(MOD_LGUI, KC_SCLN),KC_TRANSPARENT,
+    TO(10),          MT(MOD_LGUI, KC_A),MT(MOD_LALT, KC_S),MT(MOD_LCTL, KC_D),MT(MOD_LSFT, KC_F),KC_G,                                           KC_H,           MT(MOD_LSFT, KC_J),MT(MOD_LCTL, KC_K),MT(MOD_LALT, KC_L),MT(MOD_LGUI, KC_SCLN),KC_TRANSPARENT,
     KC_TRANSPARENT, KC_Z,           KC_X,           KC_C,           KC_V,           KC_B,                                           KC_N,           KC_M,           KC_COMMA,       KC_DOT,         KC_TRANSPARENT, KC_TRANSPARENT,
                                                     LT(3,KC_SPACE), LT(2,KC_ESCAPE),                                LT(4,KC_BSPC),  LT(1,KC_ENTER)
   ),
@@ -98,6 +99,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,                                 KC_TRANSPARENT, KC_KP_1,        KC_KP_2,        KC_KP_3,        KC_KP_DOT,      KC_TRANSPARENT,
                                                     KC_TRANSPARENT, KC_TRANSPARENT,                                 KC_TRANSPARENT, KC_KP_0
   ),
+
+  [10] = LAYOUT_voyager(
+    KC_A, STN_N1,         STN_N2,         STN_N3,         STN_N4,         STN_N5,                                         STN_N6,         STN_N7,         STN_N8,         STN_N9,         STN_NA,         STN_NB,
+    KC_TRANSPARENT,          STN_S1,         STN_TL,         STN_PL,         STN_HL,         STN_ST1,                                        STN_ST3,        STN_FR,         STN_PR,         STN_LR,         STN_TR,         STN_DR,
+    TO(0), STN_S2,         STN_KL,         STN_WL,         STN_RL,         STN_ST2,                                        STN_ST4,        STN_RR,         STN_BR,         STN_GR,         STN_SR,         STN_ZR,
+    KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, STN_NC,         QK_STENO_BOLT,                                  QK_STENO_GEMINI,STN_NC,         STN_FN,         STN_RES1,       STN_RES2,       STN_PWR,
+                                                    STN_A,          STN_O,                                          STN_E,          STN_U
+  )
 };
 
 const uint16_t PROGMEM combo0[] = { LT(3,KC_SPACE), LT(1,KC_ENTER), COMBO_END};
@@ -121,6 +130,8 @@ const uint8_t PROGMEM ledmap[][RGB_MATRIX_LED_COUNT][3] = {
     [7] = { {82,108,227}, {82,108,227}, {82,108,227}, {82,108,227}, {82,108,227}, {82,108,227}, {82,108,227}, {82,108,227}, {82,108,227}, {82,108,227}, {82,108,227}, {82,108,227}, {82,108,227}, {82,108,227}, {82,108,227}, {82,108,227}, {82,108,227}, {82,108,227}, {82,108,227}, {82,108,227}, {82,108,227}, {82,108,227}, {82,108,227}, {82,108,227}, {82,108,227}, {82,108,227}, {82,108,227}, {82,108,227}, {82,108,227}, {82,108,227}, {82,108,227}, {82,108,227}, {82,108,227}, {82,108,227}, {82,108,227}, {82,108,227}, {82,108,227}, {82,108,227}, {82,108,227}, {82,108,227}, {82,108,227}, {82,108,227}, {82,108,227}, {82,108,227}, {82,108,227}, {82,108,227}, {82,108,227}, {82,108,227}, {82,108,227}, {82,108,227}, {82,108,227}, {82,108,227} },
 
     [8] = { {31,226,221}, {31,226,221}, {31,226,221}, {31,226,221}, {31,226,221}, {31,226,221}, {31,226,221}, {31,226,221}, {31,226,221}, {31,226,221}, {31,226,221}, {31,226,221}, {31,226,221}, {31,226,221}, {31,226,221}, {31,226,221}, {31,226,221}, {31,226,221}, {31,226,221}, {31,226,221}, {31,226,221}, {31,226,221}, {31,226,221}, {31,226,221}, {31,226,221}, {31,226,221}, {31,226,221}, {31,226,221}, {31,226,221}, {31,226,221}, {31,226,221}, {31,226,221}, {31,226,221}, {31,226,221}, {31,226,221}, {31,226,221}, {31,226,221}, {31,226,221}, {31,226,221}, {31,226,221}, {31,226,221}, {31,226,221}, {31,226,221}, {31,226,221}, {31,226,221}, {31,226,221}, {31,226,221}, {31,226,221}, {31,226,221}, {31,226,221}, {31,226,221}, {31,226,221} },
+
+    [10] = { {226,255,255}, {226,225,225}, {226,225,225}, {226,225,225}, {226,225,225}, {226,225,225}, {226,225,225}, {226,225,225}, {226,225,225}, {226,225,225}, {226,225,225}, {226,225,225}, {226,225,225}, {226,225,225}, {226,225,225}, {226,225,225}, {226,225,225}, {226,225,225}, {226,225,225}, {226,225,225}, {226,225,225}, {226,225,225}, {226,225,225}, {226,225,225}, {226,225,225}, {226,225,225}, {226,225,225}, {226,225,225}, {226,225,225}, {226,225,225}, {226,225,225}, {226,225,225}, {226,225,225}, {226,225,225}, {226,225,225}, {226,225,225}, {226,225,225}, {226,225,225}, {226,225,225}, {226,225,225}, {226,225,225}, {226,225,225}, {226,225,225}, {226,225,225}, {226,225,225}, {226,225,225}, {226,225,225}, {226,225,225}, {226,225,225}, {226,225,225}, {226,225,225}, {226,225,225} },
 
 };
 
